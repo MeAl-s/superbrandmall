@@ -1,0 +1,11 @@
+# Python virtual environment
+.venv/
+
+# dotenv file with secrets
+.env
+
+# Google service account key
+signature-429903-6c362955b89e.json
+
+# YOLOv8 weights
+yolov8s-seg.pt
