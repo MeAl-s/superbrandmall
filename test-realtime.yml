@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  realtime-detector:
+    build: .
+    container_name: test-realtime-detector
+    command: python app/workers/realtime_detector.py
+    working_dir: /app
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - API_USER=${API_USER}
+      - API_PASS=${API_PASS}
+      - ORG_UUID=${ORG_UUID}
+      - DATABASE_URL=${DATABASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+    env_file:
+      - .env
+    ports:
+      - "8001:8001"

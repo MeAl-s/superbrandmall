@@ -1,0 +1,330 @@
+version: '3.8'
+
+services:
+  # 🔴 Worker 1: Realtime Detector
+  realtime-detector:
+    build: .
+    container_name: point-detection-realtime-detector
+    command: python app/workers/realtime_detector.py
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8001:8001"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - WORKER_NAME=realtime-detector
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+      - API_USER=${API_USER}
+      - API_PASS=${API_PASS}
+      - ORG_UUID=${ORG_UUID}
+      - DATABASE_URL=${DATABASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+    env_file:
+      - .env
+    networks:
+      - point-detection-network
+
+  # 🟢 Worker 2: OCR Processor
+  ocr-processor:
+    build: .
+    container_name: point-detection-ocr-processor
+    command: python app/workers/ocr_processor.py
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8002:8002"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - WORKER_NAME=ocr-processor
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+      - API_USER=${API_USER}
+      - API_PASS=${API_PASS}
+      - ORG_UUID=${ORG_UUID}
+      - DATABASE_URL=${DATABASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+    env_file:
+      - .env
+    networks:
+      - point-detection-network
+
+  # 🔵 Worker 3: OCR Classification
+  ocr-classification:
+    build: .
+    container_name: point-detection-ocr-classification
+    command: python app/workers/ocr_classification.py
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8003:8003"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - WORKER_NAME=ocr-classification
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+      - API_USER=${API_USER}
+      - API_PASS=${API_PASS}
+      - ORG_UUID=${ORG_UUID}
+      - DATABASE_URL=${DATABASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+    env_file:
+      - .env
+    networks:
+      - point-detection-network
+
+  # 🟡 Worker 4: OCR Downloader
+  ocr-downloader:
+    build: .
+    container_name: point-detection-ocr-downloader
+    command: python app/workers/ocr_downloader.py
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8004:8004"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - WORKER_NAME=ocr-downloader
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+      - API_USER=${API_USER}
+      - API_PASS=${API_PASS}
+      - ORG_UUID=${ORG_UUID}
+      - DATABASE_URL=${DATABASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+    env_file:
+      - .env
+    networks:
+      - point-detection-network
+
+  # 🟣 Worker 5: OCR Text Processor
+  ocr-text-processor:
+    build: .
+    container_name: point-detection-ocr-text-processor
+    command: python app/workers/ocr_text_processor.py
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8005:8005"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - WORKER_NAME=ocr-text-processor
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+      - API_USER=${API_USER}
+      - API_PASS=${API_PASS}
+      - ORG_UUID=${ORG_UUID}
+      - DATABASE_URL=${DATABASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+    env_file:
+      - .env
+    networks:
+      - point-detection-network
+
+  # 🟠 Worker 6: Delivery Scanner
+  delivery-scanner:
+    build: .
+    container_name: point-detection-delivery-scanner
+    command: python app/workers/delivery_scanner.py
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8006:8006"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - WORKER_NAME=delivery-scanner
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+      - API_USER=${API_USER}
+      - API_PASS=${API_PASS}
+      - ORG_UUID=${ORG_UUID}
+      - DATABASE_URL=${DATABASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+    env_file:
+      - .env
+    networks:
+      - point-detection-network
+
+  # ⚪ Worker 7: Receipt Matcher
+  receipt-matcher:
+    build: .
+    container_name: point-detection-receipt-matcher
+    command: python app/workers/receipt_matcher.py
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8007:8007"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - WORKER_NAME=receipt-matcher
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+      - API_USER=${API_USER}
+      - API_PASS=${API_PASS}
+      - ORG_UUID=${ORG_UUID}
+      - DATABASE_URL=${DATABASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+    env_file:
+      - .env
+    networks:
+      - point-detection-network
+
+  # ⚫ Worker 8: Timezone Worker (DEBUG VERSION)
+  timezone-worker:
+    build: .
+    container_name: point-detection-timezone-worker
+    command: python app/workers/timezone_worker.py
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8008:8008"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+      - ./app:/app/app  # Full app directory access
+      - ./services:/app/services  # Services directory access
+      - .:/app/project  # Entire project access for debugging
+    environment:
+      - WORKER_NAME=timezone-worker
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers:/app/services:/app/project
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+      - DATABASE_URL=${DATABASE_URL}
+      # Explicit directory paths for debugging:
+      - WATCH_DIRECTORY=/app/worker/data/matched_non_delivery
+      - OUTPUT_DIRECTORY=/app/worker/data/converted_tz
+      - TIMEZONE_OFFSET=${TIMEZONE_UTC}
+      - DEBUG=true
+      - VERBOSE=true
+    env_file:
+      - .env
+    networks:
+      - point-detection-network
+
+  # 🔵 Worker 9: Enhanced Realtime Database Inserter
+  database-inserter:
+    build: .
+    container_name: point-detection-database-inserter
+    command: python app/workers/enhanced_realtime_database_inserter.py --process-all --monitor
+    working_dir: /app
+    restart: unless-stopped
+    ports: ["8009:8009"]
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+      - ./app:/app/app  # Full app directory access
+      - ./services:/app/services  # Services directory access
+    environment:
+      - WORKER_NAME=database-inserter
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers:/app/services
+      - DATABASE_URL=${DATABASE_URL}
+      - TIMEZONE_UTC=${TIMEZONE_UTC}
+      # Database inserter specific settings:
+      - WATCH_DIRECTORY=/app/worker/data/converted_tz
+      - PROCESSED_DIRECTORY=/app/worker/data/inserted_to_database
+      - WORKER_BATCH_SIZE=10
+      - WORKER_MAX_WORKERS=4
+      - WORKER_SCAN_INTERVAL=30
+      - WORKER_PROCESS_INTERVAL=10
+      - LOG_LEVEL=INFO
+      - DEBUG=false
+      - VERBOSE=true
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - point-detection-network
+
+  # 🗄️ PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: point-detection-postgres
+    restart: unless-stopped
+    ports: ["5432:5432"]
+    environment:
+      POSTGRES_DB: myapp_db
+      POSTGRES_USER: myapp_user
+      POSTGRES_PASSWORD: superbrandmall
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Optional: database initialization
+    networks:
+      - point-detection-network
+
+  # 🔍 Database Viewer (Optional - for debugging)
+  database-viewer:
+    build: .
+    container_name: point-detection-database-viewer
+    command: python database_table_viewer.py --all
+    working_dir: /app
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - point-detection-network
+    profiles:
+      - tools  # Only run when specifically requested
+
+  # 🧹 Database Cleanup (Optional - for maintenance)
+  database-cleanup:
+    build: .
+    container_name: point-detection-database-cleanup
+    command: python database_cleanup.py --show-only
+    working_dir: /app
+    volumes:
+      - ./worker/data:/app/worker/data
+      - ./logs:/app/logs
+      - ./backups:/app/backups  # For storing backups
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app:/app/app:/app/config:/app/app/services:/app/app/workers
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - point-detection-network
+    profiles:
+      - tools  # Only run when specifically requested
+
+networks:
+  point-detection-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  worker_data:
+    driver: local

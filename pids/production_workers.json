@@ -1,0 +1,10 @@
+{
+  "realtime_detector": 49384,
+  "ocr_processor": 51312,
+  "ocr_classification": 30440,
+  "ocr_downloader": 53640,
+  "ocr_text_processor": 29248,
+  "delivery_scanner": 53776,
+  "receipt_matcher": 50228,
+  "timezone_worker": 48140
+}
