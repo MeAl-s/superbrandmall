@@ -1,0 +1,35 @@
+# Point Detection Pipeline - Simple Requirements (Latest Versions)
+
+# Core packages
+requests
+python-dotenv
+pytz
+
+# Image processing & OCR
+opencv-python
+Pillow
+pytesseract
+scikit-image
+
+# Data processing
+numpy
+pandas
+
+# File monitoring
+watchdog
+
+# System monitoring
+psutil
+
+# Database (uncomment what you need)
+# psycopg2-binary
+# pymysql
+
+# Web framework (if needed)
+flask
+gunicorn
+
+# Additional utilities
+schedule
+colorlog
+rich

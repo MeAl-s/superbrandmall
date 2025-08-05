@@ -1,11 +1,47 @@
-# Python virtual environment
+# Virtual environments
 .venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
 
-# dotenv file with secrets
+# Environment files
 .env
+.env.local
+.env.development
+.env.test
+.env.production
+*.env
 
-# Google service account key
-signature-429903-6c362955b89e.json
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# YOLOv8 weights
-yolov8s-seg.pt
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
